@@ -10,7 +10,7 @@ export default class StyleSheet {
   constructor({
     name = 'stylesheet',
     optimizeForSpeed = isProd,
-    isBrowser = typeof window !== 'undefined'
+    isBrowser = window !== 'undefined' && !!process.browser
   } = {}) {
     invariant(isString(name), '`name` must be a string')
     this._name = name
@@ -29,7 +29,7 @@ export default class StyleSheet {
     this._rulesCount = 0
 
     const node =
-      this._isBrowser && document.querySelector('meta[property="csp-nonce"]')
+      this._isBrowser && document && document.querySelector('meta[property="csp-nonce"]')
     this._nonce = node ? node.getAttribute('content') : null
   }
 
